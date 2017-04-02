@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="~{includes/bootstrapMeta.html :: bootstrapMeta}" />
+<title>Planets Manager</title>
+<div th:replace="~{includes/bootstrapCSS.html :: bootstrapCSS}" />
+</head>
+<body>
+	<div class="container" role="main">
+
+		<div class="page-header">
+			<h1>Planet Management</h1>
+		</div>
+
+		<!--  Error message ----------------------------------------------------------- -->
+		<div th:unless="${errorMessage} == null" th:text="${errorMessage}"
+			class="alert alert-danger" role="alert"></div>
+		<!--  Error message ----------------------------------------------------------- -->
+
+		<!--  Warning message ----------------------------------------------------------- -->
+		<div th:unless="${warningMessage} == null" th:text="${warningMessage}"
+			class="alert alert-warning" role="warning"></div>
+		<!--  Warning message ----------------------------------------------------------- -->
+
+		<!--   message ----------------------------------------------------------- -->
+		<div th:unless="${message} == null" th:text="${message}"
+			class="alert alert-success" role="warning"></div>
+		<!--   message ----------------------------------------------------------- -->
+
+		<nav th:replace="~{includes/searchNav.html :: search}"></nav>
+
+		<!--  2 simple buttons ----------------------------------------------------------- -->
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<p>
+					<a href="editPlanet">
+						<button type="button" class="btn btn-success">Add new
+							Planet</button>
+					</a> <a href="fillPlanetList">
+						<button type="button" class="btn btn-success">Fill List</button>
+					</a>
+				</p>
+			</div>
+		</div>
+		<!--  2 simple buttons ----------------------------------------------------------- -->
+
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+
+				<table data-toggle="table" class="table table-striped">
+					<thead>
+						<tr>
+							<th data-sortable="true">SSN</th>
+							<th data-sortable="true">Planet Name</th>
+							<th data-sortable="true">Surface</th>
+							<th data-sortable="true">Size</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+							<!--  list all items ----------------------------------------------------------- -->
+							<tr th:each="planet : ${#request.getAttribute('planets')}">
+							    <td th:text="${planet.ssn}"></td>
+							    <td th:text="${planet.name}"></td>
+							    <td th:text="${planet.surface}"></td>
+							    <td th:text="${planet.size}"></td>
+							    <td><a th:href="@{/deletePlanet(ssn=${planet.ssn})}">
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										Delete
+									</button>
+								</a>
+								<a th:href="@{/editPlanet(ssn=${planet.ssn})}">
+								<button type="button" class="btn btn-xs btn-success">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									Edit
+								</button>
+							</a></td>
+							</tr>
+							<!--  list all items ----------------------------------------------------------- -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!--  End of container -->
+	<div th:replace="~{includes/bootstrapJS.html :: bootstrapJS}" />
+</body>
+</html>
